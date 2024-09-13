@@ -2,7 +2,6 @@ using CsvHelper;
 using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 public static class Loader
 {
@@ -133,6 +132,7 @@ public static class Loader
             "Mask of Chaos and The Star Virus" => "The Star Virus / Mask of Chaos",
             "Highwood/Annihilation Factor" => "Highwood / Annihilation Factor",
             "Yolanda:  The Girl From Erosphere" => "Yolanda: The Girl From Erosphere",
+            "Five for infinity" => "Five for Infinity",
             _ => title,
         };
     }
@@ -165,6 +165,20 @@ public static class Loader
             "The Star Virus / Mask of Chaos" => 1970,
             "The Flight of the Endeavor" => 1978,
             "Yolanda: The Girl From Erosphere" => 1975,
+            "The Bromius Phenomenon"=> 1973,
+            "Five for Infinity" => 1976,
+            "The Last Gene" => 1976,
+            "Lemmus 3 The Archives of Haven" => 1977,
+            "Saucer Hill" => 1979,
+            "The Wandering Worlds" => 1976,
+            "When Harlie Was One: Release 1.0" => 1972,
+            "The Star Beast" => 1954,
+            "All the Myriad Ways" => 1971,
+            "Crashlander" => 1994,
+            "A Hole in Space" => 1974,
+            "The Long Arm of Gil Hamilton" => 1976,
+            "The Ringworld Engineers" => 1979,
+            "The Ringworld Throne" => 1996,
             _ => book.OriginalPublicationYear,
         };
     }
