@@ -10,7 +10,7 @@ public class BookTitleComparer : IComparer<string>
         return x?.CompareTo(y) ?? 0;
     }
 
-    private string? StripArticles(string? title)
+    private static string? StripArticles(string? title)
     {
         return title?.Split(' ')?[0] switch
         {

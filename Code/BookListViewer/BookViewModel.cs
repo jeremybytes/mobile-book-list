@@ -5,21 +5,21 @@ namespace BookListViewer;
 
 public class BookViewModel : INotifyPropertyChanged
 {
-    private static readonly KeyValuePair<string, string>[] sortList = {
+    private static readonly KeyValuePair<string, string>[] sortList = [
         new KeyValuePair<string, string>("Author", "Author"),
         new KeyValuePair<string, string>("Title", "Title"),
         new KeyValuePair<string, string>("OriginalPublicationYear", "Publication Year"),
-    };
+    ];
 
-    public KeyValuePair<string, string>[] SortList => sortList;
+    public static KeyValuePair<string, string>[] SortList => sortList;
 
-    private static readonly KeyValuePair<string, string>[] groupList = {
+    private static readonly KeyValuePair<string, string>[] groupList = [
         new KeyValuePair<string, string>("None", "None"),
         new KeyValuePair<string, string>("Author", "Author"),
         new KeyValuePair<string, string>("OriginalPublicationYear", "Publication Year"),
-    };
+    ];
 
-    public KeyValuePair<string, string>[] GroupList => groupList;
+    public static KeyValuePair<string, string>[] GroupList => groupList;
 
     public BookTemplate ListTemplate { get; set; } = BookTemplate.FlatAuthor;
 
@@ -163,7 +163,7 @@ public class BookViewModel : INotifyPropertyChanged
                      || b.Title.Contains(searchText, StringComparison.CurrentCultureIgnoreCase));
     }
 
-    private IOrderedEnumerable<Book> UpdateSort(IEnumerable<Book> data, string? primary, string? secondary = null, string? tertiary = null)
+    private static IOrderedEnumerable<Book> UpdateSort(IEnumerable<Book> data, string? primary, string? secondary = null, string? tertiary = null)
     {
         var sorted = primary switch
         {

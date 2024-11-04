@@ -72,7 +72,7 @@ public class LaserBookOwnedConverter : JsonConverter<bool>
     {
         var value = reader.GetString();
         if (string.IsNullOrEmpty(value)) return false;
-        bool owned = value == "true" ? true : false;
+        bool owned = value == "true";
         return owned;
     }
 
