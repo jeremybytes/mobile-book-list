@@ -1,3 +1,5 @@
+namespace Scrubber;
+
 // BookId,Title,Author1,Author,AdditionalAuthors,
 // ISBN,ISBN13,MyRating,AverageRating,Publisher,Binding,
 // NumberOfPages,YearPublished,OriginalPublicationYear,

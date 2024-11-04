@@ -3,6 +3,8 @@ using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
+namespace Scrubber;
+
 public static class Loader
 {
     public static List<LaserBook> LoadLaserBooks(string filename)
