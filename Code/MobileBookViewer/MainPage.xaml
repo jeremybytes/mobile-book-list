@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobileBookViewer.MainPage">
 
-    <ScrollView>
+    <ScrollView x:Name="MainView">
         <VerticalStackLayout
             Padding="30,0"
             Spacing="25">
@@ -33,6 +33,18 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                <Button x:Name="PreviousPage" Text="Previous"
+                        Grid.Column="0" Margin="0,0,10,0"
+                        Clicked="PreviousPage_Clicked"/>
+                <Button x:Name="NextPage" Text="Next"
+                        Grid.Column="1" Margin="10,0,0,0"
+                        Clicked="NextPage_Clicked" />
+            </Grid>
             <Button x:Name="LaserButton" Text="Laser Books" 
                     Clicked="LaserButton_Clicked"/>
         </VerticalStackLayout>

@@ -37,4 +37,16 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
     {
         await Navigation.PushAsync(new LaserBooksPage());
     }
+
+    private async void NextPage_Clicked(object sender, EventArgs e)
+    {
+        viewModel.NextPage();
+        await MainView.ScrollToAsync(0, 0, false);
+    }
+
+    private async void PreviousPage_Clicked(object sender, EventArgs e)
+    {
+        viewModel.PreviousPage();
+        await MainView.ScrollToAsync(0, 0, false);
+    }
 }

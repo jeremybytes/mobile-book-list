@@ -8,6 +8,7 @@ public class BookViewModel : INotifyPropertyChanged
 {
     private BookTitleComparer titleComparer = new();
     private int page = 0;
+    private int pageSize = 10;
 
     private string searchText = "";
     public string SearchText
@@ -41,7 +42,8 @@ public class BookViewModel : INotifyPropertyChanged
                    .Where(b => b.Bookshelves?.Contains("owned-sci-fi") ?? false)
                    .OrderBy(b => b.Author).ThenBy(b => b.Title, titleComparer)
                    .ToList();
-        defaultBooks = allBooks?.Take(20).ToList();
+        defaultBooks = allBooks?.Take(pageSize).ToList();
+        page = 1;
         Books = defaultBooks;
     }
 
@@ -52,6 +54,7 @@ public class BookViewModel : INotifyPropertyChanged
     {
         if (string.IsNullOrEmpty(searchText) || string.IsNullOrWhiteSpace(searchText))
         {
+            page = 1;
             Books = defaultBooks;
             return;
         }
@@ -60,6 +63,19 @@ public class BookViewModel : INotifyPropertyChanged
                                      b.Title.Contains(searchText, StringComparison.CurrentCultureIgnoreCase))
                          .Take(100)
                          .ToList();
+    }
+
+    public void NextPage()
+    {
+        page++;
+        Books = allBooks?.Skip(pageSize * page).Take(pageSize).ToList();
+    }
+
+    public void PreviousPage()
+    {
+        if (page > 1)
+            page--;
+        Books = allBooks?.Skip(pageSize * page).Take(pageSize).ToList();
     }
 
     #region INotifyPropertyChanged Members
