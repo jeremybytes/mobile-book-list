@@ -10,13 +10,8 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
     public MainPage()
     {
         InitializeComponent();
-        LoadAfterConstruction();
-    }
-
-    private async void LoadAfterConstruction()
-    {
-        await viewModel.Initialize();
         this.BindingContext = viewModel;
+        Loaded += async (_, _) => await viewModel.Initialize();
     }
 
     private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
