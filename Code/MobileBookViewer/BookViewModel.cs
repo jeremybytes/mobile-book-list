@@ -36,6 +36,18 @@ public class BookViewModel : INotifyPropertyChanged
         }
     }
 
+    private bool navVisible = true;
+    public bool NavVisible
+    {
+        get { return navVisible; }
+        set
+        {
+            navVisible = value;
+            RaisePropertyChanged(nameof(NavVisible));
+        }
+    }
+
+
     public async Task Initialize()
     {
         allBooks = (await BookLoader.LoadJsonData("book_list.json"))?
@@ -47,7 +59,7 @@ public class BookViewModel : INotifyPropertyChanged
         Books = defaultBooks;
     }
 
-    public ICommand PerformSearch => 
+    public ICommand PerformSearch =>
         new Command<string>((string searchText) => SearchText = searchText);
 
     public void UpdateSearch()
@@ -56,6 +68,7 @@ public class BookViewModel : INotifyPropertyChanged
         {
             page = 1;
             Books = defaultBooks;
+            NavVisible = true;
             return;
         }
 
@@ -63,6 +76,7 @@ public class BookViewModel : INotifyPropertyChanged
                                      b.Title.Contains(searchText, StringComparison.CurrentCultureIgnoreCase))
                          .Take(100)
                          .ToList();
+        NavVisible = false;
     }
 
     public void NextPage()

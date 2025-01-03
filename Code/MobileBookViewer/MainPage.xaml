@@ -40,10 +40,12 @@
                     </Grid.ColumnDefinitions>
                 <Button x:Name="PreviousPage" Text="Previous"
                         Grid.Column="0" Margin="0,0,10,0"
-                        Clicked="PreviousPage_Clicked"/>
+                        Clicked="PreviousPage_Clicked"
+                        IsVisible="{Binding NavVisible}"/>
                 <Button x:Name="NextPage" Text="Next"
                         Grid.Column="1" Margin="10,0,0,0"
-                        Clicked="NextPage_Clicked" />
+                        Clicked="NextPage_Clicked"
+                        IsVisible="{Binding NavVisible}"/>
             </Grid>
             <Button x:Name="LaserButton" Text="Laser Books" 
                     Clicked="LaserButton_Clicked"/>
