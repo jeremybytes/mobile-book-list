@@ -6,7 +6,7 @@
     <ScrollView x:Name="MainView">
         <VerticalStackLayout
             Padding="30,0"
-            Spacing="25">
+            Spacing="10">
             <Label
                 Text="Jeremy's Books"
                 Style="{StaticResource Headline}"
@@ -33,11 +33,11 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
                 <Button x:Name="PreviousPage" Text="Previous"
                         Grid.Column="0" Margin="0,0,10,0"
                         Command="{Binding PreviousPageCommand}"

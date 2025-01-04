@@ -8,7 +8,7 @@ public class BookViewModel : INotifyPropertyChanged
 {
     private BookTitleComparer titleComparer = new();
     private int page = 0;
-    private int pageSize = 10;
+    private int pageSize = 11;
 
     private string searchText = "";
     public string SearchText
