@@ -7,7 +7,7 @@ namespace MobileBookViewer;
 public class BookViewModel : INotifyPropertyChanged
 {
     private BookTitleComparer titleComparer = new();
-    private int page = 0;
+    private int page = 1;
     private int pageSize = 11;
 
     private string searchText = "";
@@ -47,16 +47,21 @@ public class BookViewModel : INotifyPropertyChanged
         }
     }
 
-
     public async Task Initialize()
     {
-        allBooks = (await BookLoader.LoadJsonData("book_list.json"))?
-                   .Where(b => b.Bookshelves?.Contains("owned-sci-fi") ?? false)
-                   .OrderBy(b => b.Author).ThenBy(b => b.Title, titleComparer)
-                   .ToList() ?? [];
-        defaultBooks = allBooks.Take(pageSize);
-        page = 1;
-        Books = defaultBooks;
+        if (searchText.Trim() != string.Empty)
+        {
+            UpdateSearch();
+        }
+        else
+        {
+            allBooks = (await BookLoader.LoadJsonData("book_list.json"))?
+                       .Where(b => b.Bookshelves?.Contains("owned-sci-fi") ?? false)
+                       .OrderBy(b => b.Author).ThenBy(b => b.Title, titleComparer)
+                       .ToList() ?? [];
+            defaultBooks = allBooks.Skip(pageSize * page).Take(pageSize);
+            Books = defaultBooks;
+        }
     }
 
     public ICommand PerformSearch =>
