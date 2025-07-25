@@ -59,8 +59,8 @@ public class BookViewModel : INotifyPropertyChanged
                        .Where(b => b.Bookshelves?.Contains("owned-sci-fi") ?? false)
                        .OrderBy(b => b.Author).ThenBy(b => b.Title, titleComparer)
                        .ToList() ?? [];
-            defaultBooks = allBooks.Skip(pageSize * page).Take(pageSize);
-            Books = defaultBooks;
+            //defaultBooks = allBooks.Skip(pageSize * page).Take(pageSize);
+            Books = allBooks;
         }
     }
 
@@ -74,16 +74,13 @@ public class BookViewModel : INotifyPropertyChanged
     {
         if (string.IsNullOrEmpty(searchText) || string.IsNullOrWhiteSpace(searchText))
         {
-            page = 1;
-            Books = defaultBooks;
-            NavVisible = true;
+            Books = allBooks;
             return;
         }
 
         Books = allBooks.Where(b => b.Author.Contains(searchText, StringComparison.CurrentCultureIgnoreCase) ||
                                     b.Title.Contains(searchText, StringComparison.CurrentCultureIgnoreCase))
                         .Take(100);
-        NavVisible = false;
     }
 
     public void NextPage()

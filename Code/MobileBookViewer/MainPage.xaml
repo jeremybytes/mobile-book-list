@@ -1,55 +1,52 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MobileBookViewer.MainPage">
+             xmlns:lib="clr-namespace:BookList.Library;assembly=BookList.Library"
+             xmlns:local="clr-namespace:MobileBookViewer"
+             x:Class="MobileBookViewer.MainPage"
+             x:DataType="local:BookViewModel">
 
-    <ScrollView x:Name="MainView">
-        <VerticalStackLayout
-            Padding="30,0"
-            Spacing="10">
-            <Label
-                Text="Jeremy's Books"
-                Style="{StaticResource Headline}"
-                SemanticProperties.HeadingLevel="Level1" />
+    <Grid RowDefinitions="auto,auto,*,auto">
 
-            <SearchBar x:Name="searchBar"
-                       Placeholder="Search Books"
-                       SearchCommand="{Binding PerformSearch}"
-                       SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}"
-                       TextChanged="SearchBar_TextChanged"/>
+        <Label Grid.Row="0"
+               Text="Jeremy's Books"
+               Style="{StaticResource Headline}"
+               SemanticProperties.HeadingLevel="Level1" />
 
-            <ListView ItemsSource="{Binding Books}"
-                      ItemSelected="ListView_ItemSelected">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout>
-                                <Label Text="{Binding Author}"
-                                       FontAttributes="Bold"/>
-                                <Label Text="{Binding Title}"
-                                       Margin="10, 0, 0, 0"/>
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Button x:Name="PreviousPage" Text="Previous"
-                        Grid.Column="0" Margin="0,0,10,0"
-                        Command="{Binding PreviousPageCommand}"
-                        IsVisible="{Binding NavVisible}"/>
-                <Button x:Name="NextPage" Text="Next"
-                        Grid.Column="1" Margin="10,0,0,0"
-                        Command="{Binding NextPageCommand}"
-                        IsVisible="{Binding NavVisible}"/>
-            </Grid>
-            <Button x:Name="LaserButton" Text="Laser Books" 
-                    Clicked="LaserButton_Clicked"/>
-        </VerticalStackLayout>
-    </ScrollView>
+        <SearchBar Grid.Row="1" 
+                   x:Name="searchBar"
+                   Placeholder="Search Books"
+                   SearchButtonPressed="searchBar_SearchButtonPressed"
+                   SearchCommand="{Binding PerformSearch}"
+                   SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}"
+                   TextChanged="SearchBar_TextChanged"/>
+
+        <CollectionView Grid.Row="2" Margin="10"
+                        ItemsSource="{Binding Books}"
+                        SelectionMode="Single">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="lib:Book" >
+                    <Grid RowDefinitions="auto,auto,auto">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                Tapped="TapGestureRecognizer_Tapped"
+                                CommandParameter="{Binding}" />
+                        </Grid.GestureRecognizers>
+                        <Label Grid.Row="0" Text="{Binding Author}"
+                               Margin="30, 0, 0, 0"
+                               FontAttributes="Bold"/>
+                        <Label Grid.Row="1" Text="{Binding Title}"
+                               Margin="40, 0, 0, 0"/>
+                        <Border Grid.Row="2" Margin="30, 0"/>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+
+        <Button x:Name="LaserButton" Grid.Row="3" Margin="10" 
+                Text="Laser Books" 
+                Clicked="LaserButton_Clicked"/>
+    </Grid>
 
 </ContentPage>

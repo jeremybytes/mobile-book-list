@@ -14,18 +14,14 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
         Loaded += async (_, _) => await viewModel.Initialize();
     }
 
-    private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
+    private async void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
     {
         SearchBar searchBar = (SearchBar)sender;
         if (searchBar.Text.Length == 0)
+        {
             viewModel.SearchText = searchBar.Text;
-    }
-
-    private async void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-    {
-        var book = ((ListView)sender).SelectedItem as Book;
-        if (book is null) return;
-        await Navigation.PushAsync(new BookDetailPage(book));
+            await searchBar.HideSoftInputAsync(CancellationToken.None);
+        }
     }
 
     private async void LaserButton_Clicked(object sender, EventArgs e)
@@ -33,4 +29,16 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
         await Navigation.PushAsync(new LaserBooksPage());
     }
 
+    private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    {
+        var book = e.Parameter as Book;
+        if (book is null) return;
+        await Navigation.PushAsync(new BookDetailPage(book));
+    }
+
+    private async void searchBar_SearchButtonPressed(object sender, EventArgs e)
+    {
+        SearchBar searchBar = (SearchBar)sender;
+        await searchBar.HideSoftInputAsync(CancellationToken.None);
+    }
 }

@@ -7,50 +7,46 @@
     <ContentPage.Resources>
         <local:LaserOwnedConverter x:Key="myLaserOwnedConverter" />
     </ContentPage.Resources>
-    <ScrollView>
-        <VerticalStackLayout
-            Padding="30,0"
-            Spacing="10">
-            <Label
-                Text="Laser Books"
-                Style="{StaticResource Headline}"
-                SemanticProperties.HeadingLevel="Level1" />
+    <Grid RowDefinitions="auto,auto,*">
+        <Label Grid.Row="0"
+               Text="Laser Books"
+               Style="{StaticResource Headline}"
+               SemanticProperties.HeadingLevel="Level1" />
 
-            <HorizontalStackLayout>
-                <CheckBox IsChecked="{Binding NotOwned}" VerticalOptions="Center" />
-                <Label Text="Not Owned" VerticalOptions="Center"
-                       Margin="0, 0, 30, 0"/>
-                <Label Text="Sorting " VerticalOptions="Center"/>
-                <Picker SelectedItem="{Binding SortValue}" VerticalOptions="Center">
-                    <Picker.Items>
-                        <x:String>Number</x:String>
-                        <x:String>Author</x:String>
-                    </Picker.Items>
-                </Picker>
-            </HorizontalStackLayout>
+        <HorizontalStackLayout Grid.Row="1">
+            <CheckBox IsChecked="{Binding NotOwned}" VerticalOptions="Center" />
+            <Label Text="Not Owned" VerticalOptions="Center"
+                   Margin="0, 0, 30, 0"/>
+            <Label Text="Sorting " VerticalOptions="Center"/>
+            <Picker SelectedItem="{Binding SortValue}" VerticalOptions="Center">
+                <Picker.Items>
+                    <x:String>Number</x:String>
+                    <x:String>Author</x:String>
+                </Picker.Items>
+            </Picker>
+        </HorizontalStackLayout>
 
-            <ListView ItemsSource="{Binding Books}"
-                      HasUnevenRows="True">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout Padding="10">
-                                <HorizontalStackLayout>
-                                    <Label Text="{Binding Number}"
-                                       FontAttributes="Bold"/>
-                                    <Label Text="{Binding Author}"
-                                           Margin="5, 0, 0, 0"
-                                       FontAttributes="Bold"/>
-                                </HorizontalStackLayout>
-                                <Label Text="{Binding Title}"
-                                       Margin="10, 0, 0, 0"/>
-                                <Label Text="{Binding Owned, Converter={StaticResource myLaserOwnedConverter}}"
-                                       Margin="10, 0, 0, 0"/>
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </VerticalStackLayout>
-    </ScrollView>
+        <CollectionView Grid.Row="2" ItemsSource="{Binding Books}"
+                        Margin="30, 0">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid RowDefinitions="auto,auto,auto,auto">
+                        <HorizontalStackLayout Grid.Row="0">
+                            <Label Text="{Binding Number}"
+                                   FontAttributes="Bold"/>
+                            <Label Text="{Binding Author}"
+                                   Margin="5, 0, 0, 0"
+                                   FontAttributes="Bold"/>
+                        </HorizontalStackLayout>
+                        <Label Grid.Row="1" Text="{Binding Title}"
+                               Margin="10, 0, 0, 0"/>
+                        <Label Grid.Row="2"
+                               Text="{Binding Owned, Converter={StaticResource myLaserOwnedConverter}}"
+                               Margin="10, 0, 0, 0"/>
+                        <Border Grid.Row="3" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
 </ContentPage>
