@@ -7,8 +7,6 @@ namespace MobileBookViewer;
 public class BookViewModel : INotifyPropertyChanged
 {
     private BookTitleComparer titleComparer = new();
-    private int page = 1;
-    private int pageSize = 11;
 
     private string searchText = "";
     public string SearchText
@@ -36,17 +34,6 @@ public class BookViewModel : INotifyPropertyChanged
         }
     }
 
-    private bool navVisible = true;
-    public bool NavVisible
-    {
-        get { return navVisible; }
-        set
-        {
-            navVisible = value;
-            RaisePropertyChanged(nameof(NavVisible));
-        }
-    }
-
     public async Task Initialize()
     {
         if (searchText.Trim() != string.Empty)
@@ -59,16 +46,12 @@ public class BookViewModel : INotifyPropertyChanged
                        .Where(b => b.Bookshelves?.Contains("owned-sci-fi") ?? false)
                        .OrderBy(b => b.Author).ThenBy(b => b.Title, titleComparer)
                        .ToList() ?? [];
-            //defaultBooks = allBooks.Skip(pageSize * page).Take(pageSize);
             Books = allBooks;
         }
     }
 
     public ICommand PerformSearch =>
         new Command<string>((string searchText) => SearchText = searchText);
-
-    public ICommand NextPageCommand => new Command(NextPage);
-    public ICommand PreviousPageCommand => new Command(PreviousPage);
 
     public void UpdateSearch()
     {
@@ -79,21 +62,7 @@ public class BookViewModel : INotifyPropertyChanged
         }
 
         Books = allBooks.Where(b => b.Author.Contains(searchText, StringComparison.CurrentCultureIgnoreCase) ||
-                                    b.Title.Contains(searchText, StringComparison.CurrentCultureIgnoreCase))
-                        .Take(100);
-    }
-
-    public void NextPage()
-    {
-        page++;
-        Books = allBooks.Skip(pageSize * page).Take(pageSize);
-    }
-
-    public void PreviousPage()
-    {
-        if (page > 1)
-            page--;
-        Books = allBooks.Skip(pageSize * page).Take(pageSize);
+                                    b.Title.Contains(searchText, StringComparison.CurrentCultureIgnoreCase));
     }
 
     #region INotifyPropertyChanged Members

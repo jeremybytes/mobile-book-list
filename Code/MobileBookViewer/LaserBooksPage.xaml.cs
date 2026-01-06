@@ -7,7 +7,10 @@ public partial class LaserBooksPage : ContentPage
     public LaserBooksPage()
 	{
 		InitializeComponent();
-        LoadAfterConstruction();
+        this.BindingContext = viewModel;
+        Loaded += async (_, _) => await viewModel.Initialize();
+
+        //LoadAfterConstruction();
     }
 
     private async void LoadAfterConstruction()

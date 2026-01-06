@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/BookListLibrary/">
+    <Project Path="BookListLibrary/BookList.Library.csproj" />
+  </Folder>
+  <Project Path="BookList/BookList.csproj" />
+  <Project Path="BookListViewer/BookListViewer.csproj" />
+  <Project Path="MobileBookViewer/MobileBookViewer.csproj" />
+</Solution>

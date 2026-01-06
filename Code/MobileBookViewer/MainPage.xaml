@@ -8,10 +8,10 @@
 
     <Grid RowDefinitions="auto,auto,*,auto">
 
-        <Label Grid.Row="0"
+        <!--<Label Grid.Row="0"
                Text="Jeremy's Books"
                Style="{StaticResource Headline}"
-               SemanticProperties.HeadingLevel="Level1" />
+               SemanticProperties.HeadingLevel="Level1" />-->
 
         <SearchBar Grid.Row="1" 
                    x:Name="searchBar"
@@ -42,11 +42,6 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-
-
-        <Button x:Name="LaserButton" Grid.Row="3" Margin="10" 
-                Text="Laser Books" 
-                Clicked="LaserButton_Clicked"/>
     </Grid>
 
 </ContentPage>
