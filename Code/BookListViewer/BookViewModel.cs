@@ -24,11 +24,11 @@ public class BookViewModel : INotifyPropertyChanged
     public BookTemplate ListTemplate { get; set; } = BookTemplate.FlatAuthor;
 
     private IEnumerable<Book>? books;
-    public IEnumerable<Book> Books => books ?? 
+    public IEnumerable<Book> Books => books ??= 
         Loader.LoadJsonData(AppDomain.CurrentDomain.BaseDirectory + "book_list.json")
               .Where(b => b.Bookshelves?.Contains("owned-sci-fi") ?? false);
 
-    public dynamic DisplayBooks { get; set; }
+    public dynamic? DisplayBooks { get; set; }
 
     private string searchText = "";
     public string SearchText
@@ -86,8 +86,8 @@ public class BookViewModel : INotifyPropertyChanged
         set { grouping = primarySort = value; UpdateFilterAndSort(); }
     }
 
-    private IEnumerable<Book> filtered;
-    public int BookCount => filtered.Count();
+    private IEnumerable<Book>? filtered;
+    public int BookCount => filtered?.Count() ?? 0;
 
     public BookViewModel()
     {
