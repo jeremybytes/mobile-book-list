@@ -24,11 +24,6 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
         }
     }
 
-    private async void LaserButton_Clicked(object sender, EventArgs e)
-    {
-        await Navigation.PushAsync(new LaserBooksPage());
-    }
-
     private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
     {
         var book = e.Parameter as Book;

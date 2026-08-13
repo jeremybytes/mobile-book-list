@@ -42,11 +42,12 @@ public class LaserViewModel : INotifyPropertyChanged
 
     public async Task Initialize()
     {
-        allBooks = (await BookLoader.LoadLaserJsonData("laser_books.json"))?
+        allBooks = allBooks ?? (await BookLoader.LoadLaserJsonData("laser_books.json"))?
                    .OrderBy(b => b.Number)
                    .ToList();
         books = allBooks;
         Books = books;
+        UpdateFilterAndSort();
     }
 
     private void UpdateFilterAndSort()
