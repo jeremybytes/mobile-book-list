@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="BookList/BookList.csproj" />
+  <Project Path="BookListLibrary/BookList.Library.csproj" />
+  <Project Path="BookListViewer/BookListViewer.csproj" />
+  <Project Path="MobileBookViewer/MobileBookViewer.csproj">
+    <Deploy />
+  </Project>
+</Solution>
