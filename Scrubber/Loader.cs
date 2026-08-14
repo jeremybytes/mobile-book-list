@@ -146,6 +146,7 @@ public static class Loader
             "Scyoc, Sydney J. Van" => "Van Scyoc, Sydney J.",
             "W., Mackelworth R." => "Mackelworth, R. W.",
             "XIV, Dalai Lama" => "Dalai Lama XIV",
+            "james-blish, james-blish" => "Blish, James",
             _ => name,
         };
     }
@@ -167,6 +168,8 @@ public static class Loader
             "Highwood/Annihilation Factor" => "Highwood / Annihilation Factor",
             "Yolanda:  The Girl From Erosphere" => "Yolanda: The Girl From Erosphere",
             "Five for infinity" => "Five for Infinity",
+            "Day after Tomorrow" => "Day After Tomorrow",
+            "The third body : a novel" => "The Third Body: A Novel",
             _ => title,
         };
     }
@@ -213,6 +216,14 @@ public static class Loader
             "The Long Arm of Gil Hamilton" => 1976,
             "The Ringworld Engineers" => 1979,
             "The Ringworld Throne" => 1996,
+            "Will Leave the Galaxy for Good" => 2026,
+            "Breaking Point" => 1972,
+            "Dominant Species" => 1979,
+            "Neanderthal Planet" => 1970,
+            "A Place Beyond Man" => 1977,
+            "The Sea is Boiling Hot" => 1971,
+            "Station Zero-zero" => 1978,
+            "Ta" => 1975,
             _ => book.OriginalPublicationYear,
         };
     }
