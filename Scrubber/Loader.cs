@@ -88,7 +88,7 @@ public static class Loader
         book.Author1 = FixAuthor1(book.Author1);
         book.Author = FixName(book.Author);
         book.AdditionalAuthors = NullifyEmptyString(book.AdditionalAuthors);
-        book.Title = FixTitle(book.Title);
+        book.Title = FixTitle(book);
         book.OriginalPublicationYear = FixPublicationYear(book);
         book.Publisher = NullifyEmptyString(book.Publisher);
         book.Binding = NullifyEmptyString(book.Binding);
@@ -127,7 +127,7 @@ public static class Loader
             "confirmed, To be" => "Zieja, Joe",
             "Camp, L. Sprague de" => "de Camp, L. Sprague",
             "Rey, Lester del" => "del Rey, Lester",
-            "Fred;Hoyle, Geoffrey Hoyle" => "Hoyle, Fred",
+            "Fred;Hoyle, Geoffrey Hoyle" => "Hoyle, Fred and Geoffrey",
             "Clow, Martha deMey" => "deMey Clow, Martha",
             "Guin, Ursula K. Le" => "Le Guin, Ursula K.",
             "harry-harrison, harry-harrison" => "Harrison, Harry",
@@ -151,79 +151,77 @@ public static class Loader
         };
     }
 
-    private static string? FixTitle(string? title)
+    private static string? FixTitle(OutputBook book)
     {
-        int openParen = title?.IndexOf('(') ?? 0;
+        int openParen = book.Title?.IndexOf('(') ?? 0;
         if (openParen > 0)
-            title = title?.Substring(0, openParen - 1);
+            book.Title = book.Title?.Substring(0, openParen - 1);
 
-        return title switch
+        return book.BookId switch
         {
-            "Title: VIRILITY GENE" => "Virility Gene",
-            "Avatar, The" => "The Avatar",
-            "THE SHAPE CHANGER" => "The Shape Changer",
-            "DAYS OF GLORY CONCERT BAND/HARMONIE/FANFARE" => "The Days of Glory",
-            "The soft kill" => "The Soft Kill",
-            "Mask of Chaos and The Star Virus" => "The Star Virus / Mask of Chaos",
-            "Highwood/Annihilation Factor" => "Highwood / Annihilation Factor",
-            "Yolanda:  The Girl From Erosphere" => "Yolanda: The Girl From Erosphere",
-            "Five for infinity" => "Five for Infinity",
-            "Day after Tomorrow" => "Day After Tomorrow",
-            "The third body : a novel" => "The Third Body: A Novel",
-            _ => title,
+            4207005 => "Virility Gene",
+            125567002 => "The Shape Changer",
+            41459123 => "The Days of Glory",
+            6317581 => "The Soft Kill",
+            164333779 => "The Star Virus / Mask of Chaos",
+            42605530 => "Highwood / Annihilation Factor",
+            3250817 => "Yolanda: The Girl From Erosphere",
+            8842358 => "Five for Infinity",
+            8035077 => "Day After Tomorrow",
+            4986352 => "The Third Body: A Novel",
+            _ => book.Title,
         };
     }
 
     private static int? FixPublicationYear(OutputBook book)
     {
-        if (book.Title == "Alien" && book.Author!.Contains("Leonard"))
-            return 1970;
-
-        return book.Title switch
+        return book.BookId switch
         {
-            "Keith Laumer's Retief" => 1960,
-            "System Failure" => 2019,
-            "Pain Gain" => 1977,
-            "Doom Of Three Planets" => 1978,
-            "My Name is Vladimir Sloifoiski" => 1970,
-            "The Gods of Xuma" => 1978,
-            "The Shape Changer" => 1973,
-            "Class G-Zero" => 1976,
-            "Cloning" => 1972,
-            "Love Is Forever- We Are For Tonight" => 1970,
-            "The Commodore at Sea / Spartan Planet" => 1979,
-            "The Days of Glory" => 1971,
-            "Highwood / Annihilation Factor" => 1972,
-            "The Soft Kill" => 1973,
-            "Once Departed" => 1970,
-            "Gold the Man" => 1971,
-            "Star Rogue" => 1970,
-            "Under a Calculating Star" => 1975,
-            "The Star Virus / Mask of Chaos" => 1970,
-            "The Flight of the Endeavor" => 1978,
-            "Yolanda: The Girl From Erosphere" => 1975,
-            "The Bromius Phenomenon" => 1973,
-            "Five for Infinity" => 1976,
-            "The Last Gene" => 1976,
-            "Lemmus 3 The Archives of Haven" => 1977,
-            "Saucer Hill" => 1979,
-            "The Wandering Worlds" => 1976,
-            "When Harlie Was One: Release 1.0" => 1972,
-            "The Star Beast" => 1954,
-            "All the Myriad Ways" => 1971,
-            "Crashlander" => 1994,
-            "A Hole in Space" => 1974,
-            "The Long Arm of Gil Hamilton" => 1976,
-            "The Ringworld Engineers" => 1979,
-            "The Ringworld Throne" => 1996,
-            "Will Leave the Galaxy for Good" => 2026,
-            "Breaking Point" => 1972,
-            "Dominant Species" => 1979,
-            "Neanderthal Planet" => 1970,
-            "A Place Beyond Man" => 1977,
-            "The Sea is Boiling Hot" => 1971,
-            "Station Zero-zero" => 1978,
-            "Ta" => 1975,
+            900188 => 1970,
+            53503609 => 1960,
+            42201415 => 2019,
+            9721109 => 1977,
+            11128145 => 1978,
+            135655412 => 1970,
+            60523876 => 1978,
+            7137525 => 1973,
+            125567002 => 1973,
+            163798 => 1976,
+            761379 => 1972,
+            40678119 => 1970,
+            3066418 => 1979,
+            41459123 => 1971,
+            42605530 => 1972,
+            6317581 => 1973,
+            8034776 => 1970,
+            55261061 => 1971,
+            4945490 => 1970,
+            1975347 => 1975,
+            164333779 => 1970,
+            167060109 => 1978,
+            3250817 => 1975,
+            208634668 => 1973,
+            8842358 => 1976,
+            87871353 => 1976,
+            166662384 => 1977,
+            1262383 => 1979,
+            1937468 => 1976,
+            58527184 => 1972,
+            175328 => 1954,
+            218479 => 1971,
+            100347 => 1994,
+            218473 => 1974,
+            116355 => 1976,
+            760547 => 1979,
+            64467 => 1996,
+            211175894 => 2026,
+            11153219 => 1972,
+            134214322 => 1979,
+            125930852 => 1970,
+            232058387 => 1977,
+            1550192 => 1971,
+            1415143 => 1978,
+            45706833 => 1975,
             _ => book.OriginalPublicationYear,
         };
     }
