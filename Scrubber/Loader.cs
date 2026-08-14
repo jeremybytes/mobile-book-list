@@ -7,6 +7,37 @@ namespace Scrubber;
 
 public static class Loader
 {
+    public static OutputBook ToOutputBook(ImportBook import)
+    {
+        var book = new OutputBook()
+        {
+            BookId = import.BookId,
+            Title = import.Title,
+            Author1 = import.Author1,
+            Author = import.Author,
+            AdditionalAuthors = import.AdditionalAuthors,
+            ISBN = import.ISBN,
+            ISBN13 = import.ISBN13,
+            MyRating = (int?)import.MyRating,
+            Publisher = import.Publisher,
+            Binding = import.Binding,
+            NumberOfPages = import.NumberOfPages,
+            YearPublished = import.YearPublished,
+            OriginalPublicationYear = import.OriginalPublicationYear,
+            DateRead = import.DateRead,
+            DateAdded = import.DateAdded,
+            Bookshelves = import.Bookshelves,
+            BookshelvesWithPositions = import.BookshelvesWithPositions,
+            ExclusiveShelf = import.ExclusiveShelf,
+            MyReview = import.MyReview,
+            Spoiler = import.Spoiler,
+            PrivateNotes = import.PrivateNotes,
+            ReadCount = import.ReadCount,
+            OwnedCopies = import.OwnedCopies,
+        };
+        return book;
+    }
+
     public static List<LaserBook> LoadLaserBooks(string filename)
     {
         using var reader = new StreamReader(filename);
@@ -24,23 +55,24 @@ public static class Loader
         return books.ToList();
     }
 
-    public static List<FullBook> LoadFile(string filename)
+    public static List<OutputBook> LoadFile(string filename)
     {
         FixHeader(filename);
         using var reader = new StreamReader(filename);
         using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
-        var data = csv.GetRecords<FullBook>();
-        return data.ToList();
+        var data = csv.GetRecords<ImportBook>();
+        var output = data.Select(i => ToOutputBook(i));
+        return output.ToList();
     }
 
     public static void FixHeader(string filename)
     {
         string[] lines = File.ReadAllLines(filename);
-        lines[0] = """BookId,Title,Author1,Author,AdditionalAuthors,ISBN,ISBN13,MyRating,AverageRating,Publisher,Binding,NumberOfPages,YearPublished,OriginalPublicationYear,DateRead,DateAdded,Bookshelves,BookshelvesWithPositions,ExclusiveShelf,MyReview,Spoiler,PrivateNotes,ReadCount,OwnedCopies""";
+        lines[0] = """BookId,Title,Author1,Author,AdditionalAuthors,ISBN,ISBN13,MyRating,Publisher,Binding,NumberOfPages,YearPublished,OriginalPublicationYear,DateRead,DateAdded,Bookshelves,BookshelvesWithPositions,ExclusiveShelf,MyReview,Spoiler,PrivateNotes,ReadCount,OwnedCopies""";
         File.WriteAllLines(filename, lines);
     }
 
-    public static List<FullBook> ScrubRecords(this List<FullBook> books)
+    public static List<OutputBook> ScrubRecords(this List<OutputBook> books)
     {
         for (int i = 0; i < books.Count; i++)
         {
@@ -49,7 +81,7 @@ public static class Loader
         return books;
     }
 
-    public static FullBook ScrubRecord(FullBook book)
+    public static OutputBook ScrubRecord(OutputBook book)
     {
         book.ISBN = FixISBN(book.ISBN);
         book.ISBN13 = FixISBN(book.ISBN13);
@@ -139,7 +171,7 @@ public static class Loader
         };
     }
 
-    private static int? FixPublicationYear(FullBook book)
+    private static int? FixPublicationYear(OutputBook book)
     {
         if (book.Title == "Alien" && book.Author!.Contains("Leonard"))
             return 1970;
@@ -167,7 +199,7 @@ public static class Loader
             "The Star Virus / Mask of Chaos" => 1970,
             "The Flight of the Endeavor" => 1978,
             "Yolanda: The Girl From Erosphere" => 1975,
-            "The Bromius Phenomenon"=> 1973,
+            "The Bromius Phenomenon" => 1973,
             "Five for Infinity" => 1976,
             "The Last Gene" => 1976,
             "Lemmus 3 The Archives of Haven" => 1977,
@@ -197,6 +229,12 @@ public static class Loader
         return data;
     }
 
+    private static decimal? NullifyZero(decimal? data)
+    {
+        if (data == 0) return null;
+        return data;
+    }
+
     public static void SaveAsJson(this List<LaserBook> books, string filename)
     {
         var options = new JsonSerializerOptions()
@@ -208,7 +246,7 @@ public static class Loader
         File.WriteAllText(filename, json);
     }
 
-    public static void SaveAsJson(this List<FullBook> books, string filename)
+    public static void SaveAsJson(this List<OutputBook> books, string filename)
     {
         var options = new JsonSerializerOptions()
         {
